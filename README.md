@@ -4,7 +4,7 @@ Usage
 First setup ansible to connect to the host. Then run the playbook.
 
 ```
-./play -l HOSTNAME
+ansible-playbook main.yml -l HOSTNAME
 ```
 
 Download or copy osm dump to `/srv/gis/osm/`:
