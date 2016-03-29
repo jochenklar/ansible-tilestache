@@ -13,19 +13,11 @@ Download or copy osm dump to `/srv/gis/osm/`:
 scp berlin-latest.osm.bz2 tiles.vm:/srv/gis/osm/berlin-latest.osm.pbf
 ```
 
-Download or copy shapefiles to `/srv/gis/shp/`:
-
-```
-scp -r processed_p tiles.vm:/srv/gis/shp/processed_p
-scp -r shoreline_300 tiles.vm:/srv/gis/shp/shoreline_300
-scp -r ne_110m_admin_0_boundary_lines_land tiles.vm:/srv/gis/shp/ne_110m_admin_0_boundary_lines_land
-```
-
 Log into the machine setup the postgis database:
 
 ```
 su - postgres
-/srv/gis/bin/install_postgis_db.sh postgis_berlin
+/srv/gis/bin/create_postgis_db.sh postgis_berlin
 ```
 
 Ingest the OSM dump using `osm2pgsql`.
@@ -38,6 +30,13 @@ Clone the bbs theme:
 
 ```
 git clone https://github.com/BuergerbautStadt/bbs-mapnik /srv/gis/mapnik/bbs
+```
+
+Fetch the needed shapefiles for the bbs theme:
+
+```
+cd /srv/gis/mapnik/bbs
+./get-shapefiles.sh
 ```
 
 Force ownership for `/srv/gis`:
