@@ -26,7 +26,7 @@ Ingest the OSM dump using `osm2pgsql`.
 osm2pgsql -m -d postgis_berlin /srv/gis/osm/berlin-latest.osm.pbf
 ```
 
-If RAM is low use `-s` (slim). For a bigger osm dump (like germany-latest.osm.pbf) use `-C 4069` to increase the cache size.
+If RAM is low use `-s` (slim). For a bigger osm dump (like germany-latest.osm.pbf) use `-C 3000` to increase the cache size.
 
 Clone the bbs theme:
 
