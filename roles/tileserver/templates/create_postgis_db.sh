@@ -5,12 +5,6 @@ if [ -z "$1" ]; then
 else
     DBNAME=$1
 fi
-if [ -z "$2" ]; then
-    echo "Usage: ./install_postgis_db.sh DBNAME FILENAME"
-    exit 1;
-else
-    FILENAME=$2
-fi
 
 createdb -E UTF8 -O gis $DBNAME
 
