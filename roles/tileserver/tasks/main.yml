@@ -1,0 +1,59 @@
+---
+- name: gis group is present
+  group: name=gis
+         gid=2000
+         state=present
+
+- name: gis user is present
+  user: name="gis"
+        uid="2000"
+        home="/srv/gis"
+        group=gis
+        shell=/bin/bash
+        state=present
+
+- name: common apt packages are present
+  apt: name={{ item }} state=present
+  with_items:
+  - unzip
+  - osm2pgsql
+  - mapnik-utils
+  - python-pip
+  - python-virtualenv
+  - python-mapnik
+  - python-psycopg2
+  - python-pil
+  - python-memcache
+  - tilestache
+  - apache2
+  - libapache2-mod-wsgi
+  - memcached
+
+- name: Debian apt packages are present
+  apt: name={{ item }} state=present
+  with_items:
+  - postgresql-9.4
+  - postgresql-9.4-postgis-2.1
+  when: ansible_distribution == 'Debian'
+
+- name: Ubuntu apt packages are present
+  apt: name={{ item }} state=present
+  with_items:
+  - postgresql-9.3
+  - postgresql-9.3-postgis-2.1
+  when: ansible_distribution == 'Ubuntu'
+
+- name: directories are present
+  file: path={{ item }} state=directory mode=0755 owner=gis group=gis
+  with_items:
+  - /srv/gis/bin
+  - /srv/gis/cache
+  - /srv/gis/mapnik
+  - /srv/gis/osm
+  - /srv/gis/tilestache
+
+- name: create_postgis_db.sh is present
+  template: src=create_postgis_db.sh dest=/srv/gis/bin/create_postgis_db.sh owner=gis group=gis mode=0755
+
+- name: wsgi.py is present
+  template: src=wsgi.py dest=/srv/gis/tilestache/wsgi.py owner=gis group=gis
